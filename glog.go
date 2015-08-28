@@ -74,7 +74,7 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
-	"flag"
+	// "flag"
 	"fmt"
 	"io"
 	stdLog "log"
@@ -395,13 +395,37 @@ type flushSyncWriter interface {
 	io.Writer
 }
 
+func SetLogToStderr(b bool) {
+	logging.toStderr = b
+}
+
+func SetAlsoToStderr(b bool) {
+	logging.alsoToStderr = b
+}
+
+func SetVerbosity(v int) {
+	logging.verbosity = Level(v)
+}
+
+func SetStderrThreshold(t int) {
+	logging.stderrThreshold = severity(t)
+}
+
+func SetVModule(m string) {
+	logging.vmodule.Set(m)
+}
+
+func SetTraceLocation(l string) {
+	logging.traceLocation.Set(l)
+}
+
 func init() {
-	flag.BoolVar(&logging.toStderr, "logtostderr", false, "log to standard error instead of files")
-	flag.BoolVar(&logging.alsoToStderr, "alsologtostderr", false, "log to standard error as well as files")
-	flag.Var(&logging.verbosity, "v", "log level for V logs")
-	flag.Var(&logging.stderrThreshold, "stderrthreshold", "logs at or above this threshold go to stderr")
-	flag.Var(&logging.vmodule, "vmodule", "comma-separated list of pattern=N settings for file-filtered logging")
-	flag.Var(&logging.traceLocation, "log_backtrace_at", "when logging hits line file:N, emit a stack trace")
+	// flag.BoolVar(&logging.toStderr, "logtostderr", false, "log to standard error instead of files")
+	// flag.BoolVar(&logging.alsoToStderr, "alsologtostderr", false, "log to standard error as well as files")
+	// flag.Var(&logging.verbosity, "v", "log level for V logs")
+	// flag.Var(&logging.stderrThreshold, "stderrthreshold", "logs at or above this threshold go to stderr")
+	// flag.Var(&logging.vmodule, "vmodule", "comma-separated list of pattern=N settings for file-filtered logging")
+	// flag.Var(&logging.traceLocation, "log_backtrace_at", "when logging hits line file:N, emit a stack trace")
 
 	// Default stderrThreshold is ERROR.
 	logging.stderrThreshold = errorLog
